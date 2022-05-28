@@ -1,11 +1,16 @@
 version: "3.9"
 
 services:
-  web:
+  spring:
     build: .
     ports:
       - "8080:8080"
   tester:
-    image: peterevans/vegeta
-    entrypoint: "echo 'GET http://localhost:8080/messages' | vegeta attack -rate=10 -duration=30s | tee results.bin | vegeta report"
+    image: "peterevans/vegeta"
+    entrypoint:
+      - sh
+      - -c
+      - "echo 'GET http://spring:8080/messages' | vegeta attack -rate=30 -duration=10s | tee results.bin | vegeta report"
     restart: "no"
+    depends_on:
+      - spring
