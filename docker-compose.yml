@@ -7,6 +7,5 @@ services:
       - "8080:8080"
   tester:
     image: peterevans/vegeta
-    command:
-      - "echo 'GET http://localhost:8000/messages' | vegeta attack -rate=10 -duration=30s | tee results.bin | vegeta report"
+    entrypoint: "echo 'GET http://localhost:8080/messages' | vegeta attack -rate=10 -duration=30s | tee results.bin | vegeta report"
     restart: "no"
